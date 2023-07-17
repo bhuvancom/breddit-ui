@@ -1,0 +1,28 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.extended-menu {
+  position: absolute;
+  top: 35px;
+  right: 0px;
+  padding: 8px;
+  // display: flex;
+  // flex-direction: column;
+}
+.hide {
+  display: none;
+}
+.sticky-toolbar{
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+}
+.dark {
+  text-decoration: none !important; 
+  color: black;
+}
+.light{
+  text-decoration: none !important; 
+  color: white;
+}

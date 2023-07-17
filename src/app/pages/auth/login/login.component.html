@@ -1,0 +1,208 @@
+<div class="loginCard">
+  <mat-card style="max-width: 400px; min-width: 400px">
+    <mat-card-header>
+      <mat-card-title>Login</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form
+        *ngIf="isLogin; else elseBlock"
+        class="example-form"
+        [formGroup]="loginForm"
+      >
+        <mat-form-field class="example-full-width">
+          <mat-label>Username</mat-label>
+          <input matInput formControlName="username" placeholder="username" />
+          <button
+            *ngIf="username"
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            (click)="clearName()"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+          <mat-error
+            *ngIf="
+              loginForm.controls['username']?.invalid &&
+              (loginForm.controls['username']?.dirty ||
+                loginForm.controls['username']?.touched)
+            "
+          >
+            <ng-container
+              *ngIf="loginForm.controls['username'].errors?.['required']"
+            >
+              Name is required
+            </ng-container>
+            <ng-container
+              *ngIf="loginForm.controls['username'].errors?.['minlength']"
+            >
+              Username should be 3 characters alpha-numeric only
+            </ng-container>
+          </mat-error>
+        </mat-form-field>
+        <br />
+        <mat-form-field class="example-full-width">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            formControlName="password"
+            placeholder="Password"
+            [type]="isPassVisible ? 'text' : 'password'"
+            (ngModel)="(password)"
+          />
+          <button
+            matSuffix
+            mat-icon-button
+            (aria-label)="(isPassVisible ? 'Hide' : 'show')"
+            (click)="isPassVisible = !isPassVisible"
+          >
+            <mat-icon>{{
+              isPassVisible ? "visibility_off" : "visibility"
+            }}</mat-icon>
+          </button>
+          <mat-error
+            *ngIf="
+              loginForm.controls['password'].invalid &&
+              (loginForm.controls['password'].dirty ||
+                loginForm.controls['password'].touched)
+            "
+          >
+            <ng-container
+              *ngIf="loginForm.controls['password'].errors?.['required']"
+            >
+              password is required
+            </ng-container>
+            <ng-container
+              *ngIf="loginForm.controls['password'].errors?.['minlength']"
+            >
+              Password should be at least 3 characters long
+            </ng-container>
+          </mat-error>
+        </mat-form-field>
+      </form>
+      <ng-template #elseBlock>
+        <form class="example-form" [formGroup]="registerForm">
+          <mat-form-field class="example-full-width">
+            <mat-label>Username</mat-label>
+            <input matInput formControlName="username" placeholder="username" />
+            <button
+              *ngIf="this.registerReq.userName"
+              matSuffix
+              mat-icon-button
+              aria-label="Clear"
+              (click)="this.registerForm.controls['username'].setValue('')"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+            <mat-error
+              *ngIf="
+                registerForm.controls['username']?.invalid &&
+                (registerForm.controls['username']?.dirty ||
+                  registerForm.controls['username']?.touched)
+              "
+            >
+              <ng-container
+                *ngIf="registerForm.controls['username'].errors?.['required']"
+              >
+                Name is required
+              </ng-container>
+              <ng-container
+                *ngIf="registerForm.controls['username'].errors?.['pattern']"
+              >
+                Username should be 3 characters alpha-numeric only
+              </ng-container>
+            </mat-error>
+          </mat-form-field>
+          <br />
+          <mat-form-field class="example-full-width">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" placeholder="email" />
+            <button
+              matSuffix
+              mat-icon-button
+              (aria-label)="(isPassVisible ? 'Hide' : 'show')"
+              (click)="isPassVisible = !isPassVisible"
+            >
+              <mat-icon>{{
+                isPassVisible ? "visibility_off" : "visibility"
+              }}</mat-icon>
+            </button>
+            <mat-error
+              *ngIf="
+                registerForm.controls['email'].invalid &&
+                (registerForm.controls['email'].dirty ||
+                  registerForm.controls['email'].touched)
+              "
+            >
+              <ng-container
+                *ngIf="registerForm.controls['email'].errors?.['required']"
+              >
+                Email is required
+              </ng-container>
+              <ng-container
+                *ngIf="registerForm.controls['email'].errors?.['email']"
+              >
+                Ivalid email address
+              </ng-container>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              formControlName="password"
+              placeholder="Password"
+              [type]="isPassVisible ? 'text' : 'password'"
+            />
+            <button
+              matSuffix
+              mat-icon-button
+              (aria-label)="(isPassVisible ? 'Hide' : 'show')"
+              (click)="isPassVisible = !isPassVisible"
+            >
+              <mat-icon>{{
+                isPassVisible ? "visibility_off" : "visibility"
+              }}</mat-icon>
+            </button>
+            <mat-error
+              *ngIf="
+                registerForm.controls['password'].invalid &&
+                (registerForm.controls['password'].dirty ||
+                  registerForm.controls['password'].touched)
+              "
+            >
+              <ng-container
+                *ngIf="registerForm.controls['password'].errors?.['required']"
+              >
+                password is required
+              </ng-container>
+              <ng-container
+                *ngIf="registerForm.controls['password'].errors?.['minlength']"
+              >
+                Password should be at least 3 characters long
+              </ng-container>
+            </mat-error>
+          </mat-form-field>
+        </form>
+      </ng-template>
+      <mat-divider></mat-divider>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button (click)="this.isLogin ? login() : register()">
+        {{ !this.isLogin ? "Register" : "Login" }}
+      </button>
+    </mat-card-actions>
+    <mat-card-footer>
+      <div style="display: flex; justify-content: center; align-items: center">
+        <p>
+          New here ?
+          <a (click)="formToggle()" mat-button>{{
+            this.isLogin ? "Register" : "Login" + " Now"
+          }}</a>
+        </p>
+      </div>
+      <mat-progress-bar *ngIf="false" mode="indeterminate"></mat-progress-bar>
+    </mat-card-footer>
+  </mat-card>
+</div>
