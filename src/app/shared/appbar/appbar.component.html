@@ -1,7 +1,16 @@
 <p class="sticky-toolbar">
   <mat-toolbar color="primary">
+    <button
+      *ngIf="isMobile"
+      mat-icon-button
+      class="example-icon"
+      aria-label="Example icon-button with menu icon"
+      (click)="toggleSidebar()"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
     <span
-      ><a routerLink="/" [class]="(isDark ? 'dark' : 'light')">B-Reddit</a></span
+      ><a routerLink="/" [class]="isDark ? 'dark' : 'light'">B-Reddit</a></span
     >
     <span class="example-spacer"></span>
     <button
@@ -27,34 +36,36 @@
     >
       <mat-icon>{{ !isDark ? "dark_mode" : "light_mode" }}</mat-icon>
     </button>
-    <ng-container *ngIf="isLoggedIn && user">
-      <span
-        (mouseenter)="showExtendedBar = true"
-        (mouseleave)="showExtendedBar = false"
-        (mouseover)="showExtendedBar = true"
-        matSuffix
-      >
-        {{ user.username }}<mat-icon>arrow_drop_down </mat-icon>
-      </span>
-      <div
-        [class]="showExtendedBar ? 'extended-menu' : 'hide'"
-        (mouseenter)="showExtendedBar = true"
-        (mouseleave)="showExtendedBar = false"
-      >
-        <mat-card class="example-card">
-          <mat-card-header>
-            <div mat-card-avatar class="example-header-image"></div>
-            <mat-card-title>{{ user.username }}</mat-card-title>
-            <mat-card-subtitle>{{ user.email }}</mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-actions>
-            <button mat-button (click)="logout()">Logout</button>
-          </mat-card-actions>
-        </mat-card>
-      </div>
-    </ng-container>
-    <ng-container *ngIf="!isLoggedIn">
-      <button mat-raised-button (click)="login()">Login</button>
+    <ng-container *ngIf="!isMobile">
+      <ng-container *ngIf="isLoggedIn && user">
+        <span
+          (mouseenter)="showExtendedBar = true"
+          (mouseleave)="showExtendedBar = false"
+          (mouseover)="showExtendedBar = true"
+          matSuffix
+        >
+          {{ user.username }}<mat-icon>arrow_drop_down </mat-icon>
+        </span>
+        <div
+          [class]="showExtendedBar ? 'extended-menu' : 'hide'"
+          (mouseenter)="showExtendedBar = true"
+          (mouseleave)="showExtendedBar = false"
+        >
+          <mat-card class="example-card">
+            <mat-card-header>
+              <div mat-card-avatar class="example-header-image"></div>
+              <mat-card-title>{{ user.username }}</mat-card-title>
+              <mat-card-subtitle>{{ user.email }}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-actions>
+              <button mat-button (click)="logout()">Logout</button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="!isLoggedIn">
+        <button mat-raised-button (click)="login()">Login</button>
+      </ng-container>
     </ng-container>
   </mat-toolbar>
 </p>

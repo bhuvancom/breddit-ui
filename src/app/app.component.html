@@ -1,3 +1,33 @@
 <app-loader></app-loader>
-<app-appbar></app-appbar>
-<router-outlet></router-outlet>
+<!-- <app-navbar></app-navbar> -->
+<div class="mainItems">
+  <app-appbar
+  class="headerItem"
+    [sideNavState]="open"
+    [toggleSidebarHandler]="handleSidebarToggle"
+  ></app-appbar>
+  <mat-sidenav-container class="parent">
+    <mat-sidenav
+      #sidenav
+      [(opened)]="open"
+      mode="over"
+      fixedInViewport="false"
+      fixedTopGap="16"
+      [position]="'start'"
+      class="drawerMenu"
+    >
+      <app-sidebar-menu></app-sidebar-menu>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="mainContent">
+      <div class="container-fluid">
+        <div class="">
+          <router-outlet></router-outlet>
+          <div *ngIf="isMaps('maps')">
+            <app-footer></app-footer>
+          </div>
+        </div>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

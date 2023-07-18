@@ -1,0 +1,22 @@
+.side-items {
+  padding: 16px;
+  border: 1px solid;
+}
+.menuItem {
+  display: flex;
+  flex-direction: row;
+}
+
+.example-ripple-container {
+  cursor: pointer;
+  line-height: 16px;
+  user-select: none;
+  margin-top: 8px;
+  margin-left: 16px;
+  margin-right: 16px;
+  padding: 16px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-tap-highlight-color: transparent;
+}

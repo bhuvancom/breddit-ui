@@ -1,0 +1,22 @@
+.parent {
+  height: 100vh; /* Take the full height of the parent */
+  overflow-y: auto;
+  flex: 1;
+}
+
+.drawerMenu,
+.mainContent {
+  min-width: 50vw;
+  flex: 1; /* Make the right div grow and take available space */
+  overflow-y: auto; /* Enable vertical scrolling for the right div (scroll only if needed) */
+}
+
+.mainItems {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+.headerItem {
+  max-height: 100px;
+}

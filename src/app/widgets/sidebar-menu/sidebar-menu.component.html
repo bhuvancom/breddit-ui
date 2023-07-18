@@ -1,0 +1,11 @@
+<div class="side">
+  <mat-list-item *ngFor="let route of ROUTES">
+    <div
+      class="example-ripple-container mat-elevation-z1"
+      matRipple
+      (click)="openPath(route.path)"
+    >
+      {{ route.name }}
+    </div>
+  </mat-list-item>
+</div>
