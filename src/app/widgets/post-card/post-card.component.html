@@ -1,6 +1,6 @@
-<mat-card class="example-card mt-2">
+<mat-card class="example-card mt-2 item-hover" matRipple>
   <div class="row">
-    <div class="ms-1 col-1">
+    <div class="ms-1 col-2">
       <div class="vote-button">
         <mat-icon class="mat-18 upvote" color="warn">arrow_upward</mat-icon>
         <span class="votes">2.5k</span>
@@ -26,7 +26,7 @@
         <span class="col-4">11 hour ago</span>
       </div>
       <mat-divider class="mt-1"></mat-divider>
-      <div class="mt-2">
+      <div class="mt-2" (click) = "openPost()">
         <span class="mat-h1">This will be th title of the post</span>
         <br />
         <span class="mat-h2">This will be some content of the post</span>
@@ -34,7 +34,7 @@
       <mat-divider class="mt-1"></mat-divider>
       <div class="actionButtons row mt-2">
         <div class="col-4">
-          <button mat-button mat-icon>
+          <button mat-button mat-icon (click)="openPost()">
             <mat-icon mat-list-icon class="mat-18">comment</mat-icon>
             Comments
           </button>
@@ -54,15 +54,4 @@
       </div>
     </div>
   </div>
-</mat-card>
-
-<mat-card class="mt-1">
-  <app-comment-create></app-comment-create>
-</mat-card>
-<mat-card class="mt-1">
-  <app-comment-view class="mt-1"></app-comment-view>
-  <app-comment-view class="mt-1"></app-comment-view>
-  <app-comment-view class="mt-1"></app-comment-view>
-  <app-comment-view class="mt-1"></app-comment-view>
-  <app-comment-view class="mt-1"></app-comment-view>
 </mat-card>

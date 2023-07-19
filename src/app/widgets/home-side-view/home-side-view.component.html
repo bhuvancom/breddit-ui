@@ -1,0 +1,39 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Home</mat-card-title>
+    <mat-card-subtitle>Your personal BReddit frontpage.</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content> </mat-card-content>
+  <mat-card-actions>
+    <a class="btns" mat-raised-button color="primary" routerLink="/create/post"
+      >Create Post</a
+    >
+    <a
+      class="btns"
+      color="primary"
+      mat-stroked-button
+      routerLink="/create/subreddit"
+      >Create Community</a
+    >
+  </mat-card-actions>
+</mat-card>
+<div style="margin-top: 16px"></div>
+<mat-card>
+  <mat-card-content>
+    <div class="row">
+      <mat-nav-list>
+        <a
+          matRipple
+          class="col-6 links item-hover"
+          mat-list-item
+          [routerLink]="route.path"
+          *ngFor="let route of sideRoutes"
+        >
+          {{ route.name }}
+        </a>
+      </mat-nav-list>
+    </div>
+    <mat-divider></mat-divider>
+  </mat-card-content>
+</mat-card>

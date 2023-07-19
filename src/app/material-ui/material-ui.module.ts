@@ -24,8 +24,11 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDividerModule } from '@angular/material/divider';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
+import {MatTabsModule} from '@angular/material/tabs';
+
 
 const MaterialComponents = [
+  MatTabsModule,
   MatListModule,
   MatSidenavModule,
   MatSnackBarModule,

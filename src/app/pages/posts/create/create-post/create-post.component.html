@@ -1,1 +1,58 @@
-<p>create-post works!</p>
+<mat-card>
+  <div class="container">
+    <div class="row">
+      <hr />
+      <div class="create-post-container col-12">
+        <form
+          class="post-form"
+          [formGroup]="createPostForm"
+          (ngSubmit)="createPost()"
+        >
+          <div class="form-group">
+            <div class="mat-h3 text-center">Create Post</div>
+            <hr />
+            <input
+              type="text"
+              [formControlName]="'postName'"
+              class="form-control"
+              placeholder="Title"
+            />
+
+            <select
+              class="form-control mt-4"
+              [formControlName]="'subredditName'"
+            >
+              <option value="" selected disabled>Select Subreddit</option>
+              <option *ngFor="let subreddit of subreddits">
+                {{ subreddit.name }}
+              </option>
+            </select>
+            <div class="mt-4"></div>
+            <editor
+              [formControlName]="'description'"
+              [init]="{
+                height: 500,
+                menubar: false,
+                plugins: [
+                  'advlist autolink lists link image charmap print preview anchor',
+                  'searchreplace visualblocks code fullscreen',
+                  'insertdatetime media table paste code help wordcount'
+                ],
+                toolbar:
+                  'undo redo | formatselect | bold italic backcolor | \
+                              alignleft aligncenter alignright alignjustify | \
+                              bullist numlist outdent indent | removeformat | help'
+              }"
+            ></editor>
+
+            <div class="mt-4 text-center">
+              <button mat-raised-button (click)="createPost()" color="primary">
+                Save
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</mat-card>

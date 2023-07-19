@@ -25,7 +25,14 @@ import { SidebarComponent } from './widgets/sidebar/sidebar.component';
 import { NavbarComponent } from './widgets/navbar/navbar.component';
 import { MaterialUiModule } from './material-ui/material-ui.module';
 import { SidebarMenuComponent } from './widgets/sidebar-menu/sidebar-menu.component';
-
+import { HomeSideViewComponent } from './widgets/home-side-view/home-side-view.component';
+import { HomeCreatePostComponent } from './widgets/home-create-post/home-create-post.component';
+import { PostCardComponent } from './widgets/post-card/post-card.component';
+import { CommentCreateComponent } from './widgets/comment-create/comment-create.component';
+import { CommentViewComponent } from './widgets/comment-view/comment-view.component';
+import { UserDetailsComponent } from './pages/user/user-details/user-details.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { EditorModule } from '@tinymce/tinymce-angular';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,6 +52,13 @@ import { SidebarMenuComponent } from './widgets/sidebar-menu/sidebar-menu.compon
     SidebarComponent,
     NavbarComponent,
     SidebarMenuComponent,
+    HomeSideViewComponent,
+    HomeCreatePostComponent,
+    PostCardComponent,
+    CommentCreateComponent,
+    CommentViewComponent,
+    UserDetailsComponent,
+    NotFoundComponent,
   ],
   imports: [
     MaterialUiModule,
@@ -52,6 +66,7 @@ import { SidebarMenuComponent } from './widgets/sidebar-menu/sidebar-menu.compon
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
+    EditorModule,
     ReactiveFormsModule,
     HttpClientModule,
 

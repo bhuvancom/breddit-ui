@@ -1,0 +1,39 @@
+.vote-button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-direction: column;
+}
+
+.mat-card {
+  padding: 8px 4px 4px 4px !important;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.upvote,
+.downvote {
+  font-size: 20px;
+  padding: 5px;
+}
+
+.votes {
+  width: 30px;
+  text-align: center;
+}
+
+.custom-link {
+  position: relative;
+  display: inline-block;
+  color: chocolate; /* Set the default link color */
+  text-decoration: none; /* Remove the default underline */
+
+  /* Add the underline on hover */
+  &:hover {
+    text-decoration: underline;
+  }
+}

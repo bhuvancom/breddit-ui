@@ -15,6 +15,7 @@ export class AuthService {
     return this.http.post(`${environment.baseUrl}/auth/register`, registerReq);
   }
   public token: BehaviorSubject<string> = new BehaviorSubject('');
+  public isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private tokenKey = 'auth_token';
   public user?: BehaviorSubject<User>;
   login(loginReq: LoginReq): Observable<AuthResponse> {

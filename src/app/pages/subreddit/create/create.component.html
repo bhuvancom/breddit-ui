@@ -1,1 +1,18 @@
-<p>create works!</p>
+<mat-card>
+  <div class="row">
+    <form class="example-form">
+      <mat-form-field class="col-12" appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Enter Subreddit Name" />
+      </mat-form-field>
+
+      <mat-form-field class="col-12" appearance="fill">
+        <mat-label>Description</mat-label>
+        <textarea matInput placeholder="Add some description"></textarea>
+      </mat-form-field>
+      <div class="text-center">
+        <button mat-raised-button (click)="(1)" color="primary">Save</button>
+      </div>
+    </form>
+  </div>
+</mat-card>

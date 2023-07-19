@@ -1,16 +1,20 @@
 import { inject } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { AuthService } from './auth.service';
 
 export const isUserLoggedInGaurd = (
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
+    routeActivated: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
 ) => {
-    console.log("checking auth gaurd for login");
-
     const auth = inject(AuthService);
+    const route = inject(Router);
     const isAuthentic = auth.getUser() && auth.getToken();
-    return isAuthentic !== undefined && isAuthentic !== null;
+    const isLoggedIn = !(isAuthentic !== undefined && isAuthentic !== null);
+    if (!isLoggedIn) {
+        route.navigate(['/auth/login']);
+    }
+
+    return isLoggedIn;
 };
 
 export const isUserNotLoggedInGaurd = (

@@ -12,6 +12,8 @@ import {
   isUserLoggedInGaurd,
   isUserNotLoggedInGaurd,
 } from './services/auth/auth.gaurd';
+import { UserDetailsComponent } from './pages/user/user-details/user-details.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -47,6 +49,11 @@ const routes: Routes = [
     ],
   },
   {
+    path: 'user/:userId',
+    component: UserDetailsComponent,
+    pathMatch: 'full',
+  },
+  {
     path: 'create',
     canActivate: [isUserLoggedInGaurd],
 
@@ -58,6 +65,13 @@ const routes: Routes = [
       },
       { path: 'post', pathMatch: 'full', component: CreatePostComponent },
     ],
+  },
+  {
+    path: '404', component: NotFoundComponent
+  },
+  {
+    path: '**',
+    redirectTo: '/404'
   },
 ];
 
@@ -72,4 +86,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

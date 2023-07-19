@@ -1,0 +1,30 @@
+.example-full-width {
+  width: 100%;
+}
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.madeBy {
+    color: inherit;
+    text-transform: uppercase;
+    text-decoration: none;
+    position: relative;
+    display: block;
+    &:hover {
+      text-decoration: none;
+    }
+  
+    /* Remove underline from the anchor element */
+    a {
+      // text-decoration: none;
+    }
+  
+    /* Remove visited link color */
+    a:visited {
+      color: inherit;
+    }
+  }
+  

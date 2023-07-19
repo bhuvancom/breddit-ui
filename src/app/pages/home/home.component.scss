@@ -7,3 +7,31 @@
   justify-content: center;
   margin-top: 16px;
 }
+/* Basic styles for the row */
+.row {
+  display: flex;
+}
+
+/* Additional styles for the second column */
+.second-column {
+  /* Add any specific styles for the second column here */
+  // overflow-y: hidden;
+  flex: 1;
+}
+.fist-col-wrapper {
+  flex: 3;
+  overflow-y: auto; /* Enable vertical scrolling for both columns */
+  height: 100vh;
+
+  .first-column {
+    overflow-y: auto;
+    height: 100vh;
+    /* Hide the scrollbar for Firefox */
+    scrollbar-width: none;
+    /* Hide the scrollbar for other browsers */
+    -ms-overflow-style: none;
+  }
+  .first-column::-webkit-scrollbar {
+    display: none;
+  }
+}

@@ -1,0 +1,46 @@
+<mat-card>
+  <div class="row">
+    <div class="col-2 text-info text-center">Username</div>
+    <div class="col-4">
+      <button mat-stroked-button (click)="(1)">
+        <div>Posts</div>
+        <div>200</div>
+      </button>
+    </div>
+    <div class="col-4">
+      <button mat-stroked-button (click)="(1)">
+        <div>Subreddits</div>
+        <div>200</div>
+      </button>
+    </div>
+  </div>
+</mat-card>
+<mat-tab-group dynamicHeight>
+  <mat-tab label="Posts">
+    <div class="example-small-box mat-elevation-z4">
+        <app-post-card class="mt-1"></app-post-card>
+        <app-post-card class="mt-1"></app-post-card>
+        <app-post-card class="mt-1"></app-post-card>
+        <app-post-card class="mt-1"></app-post-card>
+        <app-post-card class="mt-1"></app-post-card>
+        <app-post-card class="mt-1"></app-post-card>
+        <app-post-card class="mt-1"></app-post-card>
+    </div>
+  </mat-tab>
+  <mat-tab label="Subreddits">
+    <div class="example-large-box mat-elevation-z4">
+        <app-subreddit class="mt-2"></app-subreddit>
+        <app-subreddit class="mt-2"></app-subreddit>
+        <app-subreddit class="mt-2"></app-subreddit>
+        <app-subreddit class="mt-2"></app-subreddit>
+        <app-subreddit class="mt-2"></app-subreddit>
+        <app-subreddit class="mt-2"></app-subreddit>
+        <app-subreddit class="mt-2"></app-subreddit>
+        <app-subreddit class="mt-2"></app-subreddit>
+        <app-subreddit class="mt-2"></app-subreddit>
+        <app-subreddit class="mt-2"></app-subreddit>
+        <app-subreddit class="mt-2"></app-subreddit>
+        <app-subreddit class="mt-2"></app-subreddit>
+    </div>
+  </mat-tab>
+</mat-tab-group>

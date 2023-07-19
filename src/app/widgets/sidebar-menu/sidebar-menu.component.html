@@ -1,4 +1,16 @@
 <div class="side">
+  <ng-container *ngIf="user">
+    <mat-card>
+      <div>
+        <div class="mat-h3">{{ user?.username }}</div>
+        <div class="mat-h4">{{ user?.email }}</div>
+        <button mat-raised-button (click)="logout()" mat-icon color="warn">
+          <mat-icon class="mat-18">logout</mat-icon>
+          Logout
+        </button>
+      </div>
+    </mat-card>
+  </ng-container>
   <mat-list-item *ngFor="let route of ROUTES">
     <div
       class="example-ripple-container mat-elevation-z1"
