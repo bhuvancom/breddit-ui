@@ -1,42 +1,45 @@
-<mat-card class="example-card mt-2 item-hover" matRipple>
+<mat-card class="example-card mt-2 item-hover" matRipple *ngIf="post">
   <div class="row">
     <div class="ms-1 col-2">
-      <div class="vote-button">
-        <mat-icon class="mat-18 upvote" color="warn">arrow_upward</mat-icon>
-        <span class="votes">2.5k</span>
-        <mat-icon class="mat-18 downvote">arrow_downward</mat-icon>
-      </div>
+      <app-vote
+        [voteCount]="post.voteCount"
+        [onVoteUp]="upvote"
+        [onVoteDown]="downVote"
+        [isMyVoteDown]="post.myDownVote"
+        [isMyVoteUp]="post.myUpVote"
+      ></app-vote>
     </div>
 
     <div class="col-10">
       <div class="row">
         <a
+          *ngIf="post.subreddit"
           class="col-4 custom-link"
-          [routerLink]="'/subreddit/' + 1"
-          ><span>r/someReddit</span></a
+          [routerLink]="'/subreddit/' + post.subreddit.id"
+          ><span>r/{{ post.subreddit.name }}</span></a
         >
         <span class="col-4">
           Posted By
           <a
             class="mat-primary custom-link text-success"
-            [routerLink]="'/user/' + 2"
-            >u/bhuvancom</a
+            [routerLink]="'/user/' + post.user.username"
+            >u/{{ post.user.username }}</a
           ></span
         >
-        <span class="col-4">11 hour ago</span>
+        <span class="col-4">{{ post.creationDate | rdate }}</span>
       </div>
       <mat-divider class="mt-1"></mat-divider>
-      <div class="mt-2" (click) = "openPost()">
-        <span class="mat-h1">This will be th title of the post</span>
+      <div class="mt-2" (click)="openPost()">
+        <span class="mat-h1">{{ post.title }}</span>
         <br />
-        <span class="mat-h2">This will be some content of the post</span>
+        <span class="mat-h3" [innerHTML]="post.description"></span>
       </div>
       <mat-divider class="mt-1"></mat-divider>
       <div class="actionButtons row mt-2">
         <div class="col-4">
           <button mat-button mat-icon (click)="openPost()">
             <mat-icon mat-list-icon class="mat-18">comment</mat-icon>
-            Comments
+            {{ post.commentCount }} Comments
           </button>
         </div>
         <div class="col-4">
@@ -46,7 +49,7 @@
           </button>
         </div>
         <div class="col-4">
-          <button mat-button mat-icon routerLink="/">
+          <button mat-button mat-icon>
             <mat-icon mat-list-icon class="mat-18">save</mat-icon>
             Save
           </button>

@@ -1,7 +1,23 @@
 <mat-card class="mt-2">
-  <span><a class="linkq text-info" routerLink="/user/2">bhuvancom</a> 2 days ago</span>
-  <div>
-    <span class="mat-h3">Comment text here</span>
-    <mat-icon class="mat-18 pull-right">delete</mat-icon>
+  <span
+    ><a
+      class="linkq text-info"
+      [routerLink]="'/user/' + comment.commentBy.username"
+      >{{ comment.commentBy.username }}</a
+    >
+    {{ comment.commentDate | rdate }}</span
+  >
+  <div class="row">
+    <span class="col-11 mat-h3">{{ comment.text }}</span>
+
+    <button
+      *ngIf="comment.myComment"
+      mat-mini-fab
+      (click)="deleteComment()"
+      color="primary"
+      class="pull-right"
+    >
+      <mat-icon class="mat-18">delete</mat-icon>
+    </button>
   </div>
 </mat-card>

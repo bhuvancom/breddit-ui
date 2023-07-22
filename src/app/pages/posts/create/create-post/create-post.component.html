@@ -1,55 +1,134 @@
 <mat-card>
   <div class="container">
     <div class="row">
+      <span class="col-12 mat-h2 text-center">Write a post</span>
       <hr />
       <div class="create-post-container col-12">
         <form
-          class="post-form"
-          [formGroup]="createPostForm"
+          class="example-form"
           (ngSubmit)="createPost()"
+          [formGroup]="createPostForm"
         >
-          <div class="form-group">
-            <div class="mat-h3 text-center">Create Post</div>
-            <hr />
+          <mat-form-field class="col-12" appearance="fill">
+            <mat-label>Title</mat-label>
             <input
-              type="text"
-              [formControlName]="'postName'"
-              class="form-control"
-              placeholder="Title"
+              matInput
+              placeholder="Enter Post title"
+              [formControl]="postName"
             />
-
-            <select
-              class="form-control mt-4"
-              [formControlName]="'subredditName'"
+            <mat-error
+              *ngIf="(postName.invalid && postName.dirty) || postName.touched"
             >
-              <option value="" selected disabled>Select Subreddit</option>
-              <option *ngFor="let subreddit of subreddits">
-                {{ subreddit.name }}
-              </option>
-            </select>
-            <div class="mt-4"></div>
-            <editor
-              [formControlName]="'description'"
-              [init]="{
-                height: 500,
-                menubar: false,
-                plugins: [
-                  'advlist autolink lists link image charmap print preview anchor',
-                  'searchreplace visualblocks code fullscreen',
-                  'insertdatetime media table paste code help wordcount'
-                ],
-                toolbar:
-                  'undo redo | formatselect | bold italic backcolor | \
-                              alignleft aligncenter alignright alignjustify | \
-                              bullist numlist outdent indent | removeformat | help'
-              }"
-            ></editor>
-
-            <div class="mt-4 text-center">
-              <button mat-raised-button (click)="createPost()" color="primary">
-                Save
-              </button>
+              <ng-container *ngIf="postName.errors?.['required']">
+                Title is required
+              </ng-container>
+              <ng-container *ngIf="postName.errors?.['minlength']">
+                Title should be at least 3 characters long
+              </ng-container>
+            </mat-error>
+          </mat-form-field>
+          <div class="mt-2"></div>
+          <mat-form-field
+            *ngIf="
+              !editMode && !subreddits.isLoading && subreddits.error.length < 1
+            "
+            class="col-12"
+          >
+            <mat-select required [formControl]="subredditName">
+              <mat-option disabled selected>-- None --</mat-option>
+              <mat-option
+                *ngFor="let sub of subreddits.data?.content"
+                [value]="sub.id"
+              >
+                r/{{ sub.name }} - (Created By - u/{{ sub.creator?.username }})
+              </mat-option>
+              <div class="row mt-3" *ngIf="!subreddits.data?.last">
+                <div class="col-12 text-center">
+                  <button
+                    color="primary"
+                    mat-raised-button
+                    (click)="fetchNextSubreddits()"
+                  >
+                    Fetch more subreddits
+                  </button>
+                </div>
+              </div>
+            </mat-select>
+            <mat-label>Subreddit</mat-label>
+            <mat-error
+              *ngIf="
+                (subredditName.invalid && subredditName.dirty) ||
+                subredditName.touched
+              "
+            >
+              <ng-container *ngIf="subredditName.errors?.['required']">
+                A subreddit is required
+              </ng-container>
+            </mat-error>
+          </mat-form-field>
+          <ng-container *ngIf="subreddits.isLoading">
+            <div class="centerItem">
+              <mat-progress-spinner
+                mode="indeterminate"
+                type="indeterminate"
+                color="primary"
+                diameter="50"
+                class="mt-2 example-margin"
+              >
+              </mat-progress-spinner>
             </div>
+          </ng-container>
+          <ng-container *ngIf="subreddits.error">
+            <mat-card class="errorCard">
+              <div>
+                <app-informer
+                  [inputString]="subreddits.error"
+                  [alertType]="'danger'"
+                ></app-informer>
+                <app-error-handler
+                  class="errorCard"
+                  [callback]="fetchNextSubreddits"
+                  [inputString]="'Retry'"
+                ></app-error-handler>
+              </div>
+            </mat-card>
+          </ng-container>
+
+          <div class="mt-4"></div>
+          <editor
+            class="col-12"
+            [formControl]="description"
+            [init]="{
+              height: 500,
+              menubar: false,
+              plugins: [
+                'advlist autolink lists link image charmap print preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table paste code help wordcount'
+              ],
+              toolbar:
+                'undo redo | formatselect | bold italic backcolor | \
+                                alignleft aligncenter alignright alignjustify | \
+                                bullist numlist outdent indent | removeformat | help'
+            }"
+          ></editor>
+          <mat-error
+            *ngIf="
+              (description.invalid && description.dirty) || description.touched
+            "
+          >
+            <ng-container *ngIf="description.errors?.['required']">
+              Description is required
+            </ng-container>
+            <ng-container *ngIf="description.errors?.['minlength']">
+              Description should be at least 5 characters long
+            </ng-container>
+          </mat-error>
+
+          <div class="mt-4 col-12 text-center">
+            <button mat-raised-button type="submit" color="primary">
+              Save
+            </button>
           </div>
         </form>
       </div>

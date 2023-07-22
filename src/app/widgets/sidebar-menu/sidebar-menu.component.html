@@ -2,8 +2,10 @@
   <ng-container *ngIf="user">
     <mat-card>
       <div>
-        <div class="mat-h3">{{ user?.username }}</div>
-        <div class="mat-h4">{{ user?.email }}</div>
+        <div class="mat-h3">
+          <a [routerLink]="'/user/' + user.username">{{ user.username }}</a>
+        </div>
+        <div class="mat-h4">{{ user.email }}</div>
         <button mat-raised-button (click)="logout()" mat-icon color="warn">
           <mat-icon class="mat-18">logout</mat-icon>
           Logout

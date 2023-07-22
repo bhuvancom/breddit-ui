@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import DataState from 'src/app/models/data-state';
+import Subreddit from 'src/app/models/subreddits';
 
 @Component({
   selector: 'app-subreddit',
@@ -6,8 +8,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./subreddit.component.scss']
 })
 export class SubredditComponent implements OnInit {
+  @Input() subreddit: Subreddit | undefined;
+  constructor() {
 
-  constructor() { }
+  }
 
   ngOnInit(): void {
   }

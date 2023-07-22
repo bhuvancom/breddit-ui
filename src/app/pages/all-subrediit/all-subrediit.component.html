@@ -1,0 +1,39 @@
+<div class="example-large-box mat-elevation-z4">
+  <div class="row">
+    <div class="col-12 text-center mat-h2">All Subreddits</div>
+  </div>
+  <div class="mat-4"></div>
+  <app-subreddit
+    [subreddit]="sub"
+    *ngFor="let sub of subredditList.data?.content"
+    class="mt-2"
+  ></app-subreddit>
+</div>
+<div class="row">
+  <ng-container *ngIf="subredditList.isLoading">
+    <div class="col-12 centerItem">
+      <mat-progress-spinner
+        mode="indeterminate"
+        type="indeterminate"
+        color="primary"
+        diameter="50"
+        class="mt-2 example-margin"
+      >
+      </mat-progress-spinner></div
+  ></ng-container>
+  <ng-container *ngIf="subredditList.error.length > 0">
+    <mat-card class="errorCard">
+      <div>
+        <app-informer
+          [inputString]="subredditList.error"
+          [alertType]="'danger'"
+        ></app-informer>
+        <app-error-handler
+          class="errorCard"
+          [callback]="fetchNext"
+          [inputString]="'Retry'"
+        ></app-error-handler>
+      </div>
+    </mat-card>
+  </ng-container>
+</div>

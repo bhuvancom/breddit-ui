@@ -5,6 +5,7 @@ export default function defaultData<T>(): ApiPagedResponse<T> {
         content: [],
         totalPages: 0,
         last: true,
+        totalElements: 0,
         first: true,
     };
 };

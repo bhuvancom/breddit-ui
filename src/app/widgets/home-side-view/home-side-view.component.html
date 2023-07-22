@@ -21,6 +21,44 @@
 <div style="margin-top: 16px"></div>
 <mat-card>
   <mat-card-content>
+    <ng-container *ngIf="homePageSubreddits.isLoading">
+      <div class="col-6 item-hover" *ngFor="let _ of [].constructor(2)">
+        <ngx-skeleton-loader
+          appearance="line"
+          animation="progress-dark"
+          [theme]="{
+            overflow: 'hidden',
+            width: '80%',
+            height: '15px'
+          }"
+        ></ngx-skeleton-loader>
+      </div>
+    </ng-container>
+    <div class="row">
+      <mat-nav-list>
+        <a
+          matRipple
+          class="col-6 links item-hover"
+          mat-list-item
+          [routerLink]="'/subreddit/' + subreddit.id"
+          *ngFor="let subreddit of homePageSubreddits.data?.content"
+        >
+          {{ subreddit.name }}
+        </a>
+      </mat-nav-list>
+    </div>
+    <mat-divider></mat-divider>
+    <mat-action-list>
+      <a class="text-center link" routerLink="/subreddit" mat-button
+        >View All Subreddits</a
+      >
+    </mat-action-list>
+  </mat-card-content>
+</mat-card>
+
+<div style="margin-top: 16px"></div>
+<mat-card>
+  <mat-card-content>
     <div class="row">
       <mat-nav-list>
         <a

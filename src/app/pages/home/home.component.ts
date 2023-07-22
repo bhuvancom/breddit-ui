@@ -16,6 +16,7 @@ import { Subscription } from 'rxjs';
 export class HomeComponent implements OnInit, OnDestroy {
   homePagePosts: DataState<ApiPagedResponse<Post>>;
   isDesktop: boolean;
+
   private breakPointSubs: Subscription;
   constructor(
     private homeService: HomeService,
@@ -37,15 +38,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.breakPointSubs.unsubscribe();
   }
   ngOnInit(): void {
-    const staticHopePageData = this.homeService.homePagePosts.getValue();
-    console.log(staticHopePageData);
-
+    const staticHopePageData = this.homeService.homePagePosts.value;
     const souldFetch =
       !staticHopePageData.error &&
       !staticHopePageData.isLoading &&
       !staticHopePageData.data?.content.length;
-    console.log('shoud fetch ', { souldFetch });
-
     if (souldFetch) {
       this.fetchNext();
     }
@@ -56,8 +53,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   fetchNext = () => {
-    console.log('fetch next is');
-
     this.homeService.fetchHomePageData();
   };
 }

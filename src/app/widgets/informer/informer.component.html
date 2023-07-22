@@ -1,1 +1,8 @@
-<p class="text-center">{{ inputString }}</p>
+<div [class]="('alert alert-' + alertType)" role="alert">
+  {{ inputString }}
+  <ng-container *ngIf="closable">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <mat-icon class="mat-18">close</mat-icon>
+    </button>
+  </ng-container>
+</div>

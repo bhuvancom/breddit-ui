@@ -1,46 +1,107 @@
 <mat-card>
   <div class="row">
-    <div class="col-2 text-info text-center">Username</div>
+    <div class="col-2 text-info text-center">{{ username }}</div>
     <div class="col-4">
-      <button mat-stroked-button (click)="(1)">
+      <button mat-stroked-button (click)="tabIndex = 0">
         <div>Posts</div>
-        <div>200</div>
+        <div>{{ noOfPost }}</div>
       </button>
     </div>
     <div class="col-4">
-      <button mat-stroked-button (click)="(1)">
+      <button mat-stroked-button (click)="tabIndex = 1">
         <div>Subreddits</div>
-        <div>200</div>
+        <div>{{ noOfSubreddits }}</div>
       </button>
     </div>
   </div>
 </mat-card>
-<mat-tab-group dynamicHeight>
+<mat-tab-group dynamicHeight [selectedIndex]="tabIndex">
   <mat-tab label="Posts">
     <div class="example-small-box mat-elevation-z4">
-        <app-post-card class="mt-1"></app-post-card>
-        <app-post-card class="mt-1"></app-post-card>
-        <app-post-card class="mt-1"></app-post-card>
-        <app-post-card class="mt-1"></app-post-card>
-        <app-post-card class="mt-1"></app-post-card>
-        <app-post-card class="mt-1"></app-post-card>
-        <app-post-card class="mt-1"></app-post-card>
+      <div *ngFor="let item of posts.data?.content">
+        <app-post-card [post]="item"></app-post-card>
+      </div>
+      <ng-container
+        *ngIf="(posts.data?.content?.length ?? 0) > 0 && !posts.data?.last"
+      >
+        <div class="centerItem mt-3">
+          <button mat-raised-button (click)="fetchNextPosts()">
+            Fetch More
+          </button>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="posts.isLoading">
+        <div class="centerItem">
+          <mat-progress-spinner
+            mode="indeterminate"
+            type="indeterminate"
+            color="primary"
+            diameter="50"
+            class="mt-2 example-margin"
+          >
+          </mat-progress-spinner>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="posts.error">
+        <mat-card class="errorCard">
+          <div>
+            <app-informer
+              [inputString]="posts.error"
+              [alertType]="'danger'"
+            ></app-informer>
+            <app-error-handler
+              class="errorCard"
+              [callback]="fetchNextPosts"
+              [inputString]="'Retry'"
+            ></app-error-handler>
+          </div>
+        </mat-card>
+      </ng-container>
     </div>
   </mat-tab>
   <mat-tab label="Subreddits">
     <div class="example-large-box mat-elevation-z4">
-        <app-subreddit class="mt-2"></app-subreddit>
-        <app-subreddit class="mt-2"></app-subreddit>
-        <app-subreddit class="mt-2"></app-subreddit>
-        <app-subreddit class="mt-2"></app-subreddit>
-        <app-subreddit class="mt-2"></app-subreddit>
-        <app-subreddit class="mt-2"></app-subreddit>
-        <app-subreddit class="mt-2"></app-subreddit>
-        <app-subreddit class="mt-2"></app-subreddit>
-        <app-subreddit class="mt-2"></app-subreddit>
-        <app-subreddit class="mt-2"></app-subreddit>
-        <app-subreddit class="mt-2"></app-subreddit>
-        <app-subreddit class="mt-2"></app-subreddit>
+      <div *ngFor="let item of subreddits.data?.content">
+        <app-subreddit [subreddit]="item" class="mt-2"></app-subreddit>
+      </div>
+      <ng-container
+        *ngIf="
+          (subreddits.data?.content?.length ?? 0) > 0 && !subreddits.data?.last
+        "
+      >
+        <div class="centerItem mt-3">
+          <button mat-raised-button (click)="fetchNextSubReddits()">
+            Fetch More
+          </button>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="subreddits.isLoading">
+        <div class="centerItem">
+          <mat-progress-spinner
+            mode="indeterminate"
+            type="indeterminate"
+            color="primary"
+            diameter="50"
+            class="mt-2 example-margin"
+          >
+          </mat-progress-spinner>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="subreddits.error">
+        <mat-card class="errorCard">
+          <div>
+            <app-informer
+              [inputString]="subreddits.error"
+              [alertType]="'danger'"
+            ></app-informer>
+            <app-error-handler
+              class="errorCard"
+              [callback]="fetchNextSubReddits"
+              [inputString]="'Retry'"
+            ></app-error-handler>
+          </div>
+        </mat-card>
+      </ng-container>
     </div>
   </mat-tab>
 </mat-tab-group>

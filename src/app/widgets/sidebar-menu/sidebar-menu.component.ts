@@ -41,10 +41,9 @@ export class SidebarMenuComponent implements OnInit {
     },
   ];
   constructor(private _router: Router, private authService: AuthService) {
-    authService.token.subscribe({
+    authService.isLoggedIn.subscribe({
       next: (token) => {
-        this.isLoggedIn =
-          token.trim().length > 0 && authService.user?.getValue() !== null;
+        this.isLoggedIn = token;
         if (this.isLoggedIn) {
           const user = authService.getUser();
           if (user) {
@@ -54,17 +53,10 @@ export class SidebarMenuComponent implements OnInit {
         }
       },
     })
-
-
-    this.user = {
-      email:'akash',
-      userId:1,
-      username:'bhuvancom'
-    }
   }
 
   user?: User;
-  logout(){
+  logout() {
     this.authService.logout();
     this._router.navigate(['/']);
   }
@@ -73,7 +65,6 @@ export class SidebarMenuComponent implements OnInit {
   ngOnInit(): void { }
   openPath(path: string): void {
     console.log("clicked open ", path);
-
     this._router.navigate([path]);
   }
 }

@@ -1,42 +1,43 @@
 <mat-card class="example-card mt-2">
-  <div class="row">
+  <div class="row" *ngIf="post.data">
     <div class="ms-1 col-1">
-      <div class="vote-button">
-        <mat-icon class="mat-18 upvote" color="warn">arrow_upward</mat-icon>
-        <span class="votes">2.5k</span>
-        <mat-icon class="mat-18 downvote">arrow_downward</mat-icon>
-      </div>
+      <app-vote
+        [isMyVoteDown]="post.data.myDownVote"
+        [isMyVoteUp]="post.data.myUpVote"
+        [voteCount]="post.data.voteCount"
+        [onVoteUp]="upvote"
+        [onVoteDown]="downVote"
+      ></app-vote>
     </div>
 
     <div class="col-10">
       <div class="row">
         <a
           class="col-4 custom-link"
-          [routerLink]="'/subreddit/' + 1"
-          ><span>r/someReddit</span></a
+          [routerLink]="'/subreddit/' + post.data.subreddit?.id"
+          ><span>r/{{ post.data.subreddit?.name }}</span></a
         >
         <span class="col-4">
           Posted By
           <a
             class="mat-primary custom-link text-success"
-            [routerLink]="'/user/' + 2"
-            >u/bhuvancom</a
+            [routerLink]="'/user/' + post.data.user.username"
+            >u/{{ post.data.user.username }}</a
           ></span
         >
-        <span class="col-4">11 hour ago</span>
+        <span class="col-4">{{ post.data.creationDate | rdate }}</span>
       </div>
       <mat-divider class="mt-1"></mat-divider>
       <div class="mt-2">
-        <span class="mat-h1">This will be th title of the post</span>
-        <br />
-        <span class="mat-h2">This will be some content of the post</span>
+        <div class="mat-h1 text-center">{{ post.data.title }}</div>
+        <div class="mt-3" [innerHtml]="post.data.description"></div>
       </div>
       <mat-divider class="mt-1"></mat-divider>
       <div class="actionButtons row mt-2">
         <div class="col-4">
           <button mat-button mat-icon>
             <mat-icon mat-list-icon class="mat-18">comment</mat-icon>
-            Comments
+            {{ post.data.commentCount }}Comments
           </button>
         </div>
         <div class="col-4">
@@ -54,15 +55,107 @@
       </div>
     </div>
   </div>
+
+  <ng-container *ngIf="post.isLoading">
+    <div class="centerItem">
+      <mat-progress-spinner
+        mode="indeterminate"
+        type="indeterminate"
+        color="primary"
+        diameter="50"
+        class="mt-2 example-margin"
+      >
+      </mat-progress-spinner>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="post.error">
+    <mat-card class="errorCard">
+      <div>
+        <app-informer
+          [inputString]="post.error"
+          [alertType]="'danger'"
+        ></app-informer>
+        <app-error-handler
+          class="errorCard"
+          [callback]="fetchPost"
+          [inputString]="'Retry'"
+        ></app-error-handler>
+      </div>
+    </mat-card>
+  </ng-container>
+
+  <ng-container *ngIf="post.data?.myPost">
+    <div class="row mt-4">
+      <div class="col-12 text-center">
+        <button mat-raised-button (click)="editPost()" color="primary">
+          <mat-icon class="mat-18">edit</mat-icon>
+          <span class="mat-18">Edit Post</span>
+        </button>
+
+        <button
+          class="ml-3"
+          mat-raised-button
+          (click)="deletePost()"
+          color="warn"
+        >
+          <mat-icon class="mat-18">delete</mat-icon>
+          <span class="mat-18">Delete Post</span>
+        </button>
+      </div>
+    </div>
+  </ng-container>
 </mat-card>
 
 <mat-card class="mt-1">
-  <app-comment-create></app-comment-create>
+  <app-comment-create
+    *ngIf="user && isLoggedIn"
+    [username]="user.username"
+    [onSubmit]="onSubmitComment"
+  ></app-comment-create>
 </mat-card>
 <mat-card class="mt-1">
-  <app-comment-view class="mt-1"></app-comment-view>
-  <app-comment-view class="mt-1"></app-comment-view>
-  <app-comment-view class="mt-1"></app-comment-view>
-  <app-comment-view class="mt-1"></app-comment-view>
-  <app-comment-view class="mt-1"></app-comment-view>
+  <div>
+    <app-comment-view
+      *ngFor="let comment of comments.data?.content"
+      class="mt-1"
+      [comment]="comment"
+      [onDelete]="onCommentDelete"
+    ></app-comment-view>
+  </div>
+  <ng-container
+    *ngIf="(comments.data?.content?.length ?? 0) > 0 && !comments.data?.last"
+  >
+    <div class="centerItem mt-3">
+      <button mat-raised-button (click)="fetchNextComments()">
+        Fetch More
+      </button>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="comments.isLoading">
+    <div class="centerItem">
+      <mat-progress-spinner
+        mode="indeterminate"
+        type="indeterminate"
+        color="primary"
+        diameter="50"
+        class="mt-2 example-margin"
+      >
+      </mat-progress-spinner>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="comments.error">
+    <mat-card class="errorCard">
+      <div>
+        <app-informer
+          [inputString]="comments.error"
+          [alertType]="'danger'"
+        ></app-informer>
+        <app-error-handler
+          class="errorCard"
+          [callback]="fetchNextComments"
+          [inputString]="'Retry'"
+        ></app-error-handler>
+      </div>
+    </mat-card>
+  </ng-container>
 </mat-card>

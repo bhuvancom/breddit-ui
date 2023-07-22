@@ -12,7 +12,7 @@ import { AuthService } from '../services/auth/auth.service';
   providedIn: 'root',
 })
 export class APICall {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
   public apiCall<T>(
     apiType: API_CALL_TYPE,
     path: string,
@@ -56,8 +56,6 @@ export class APICall {
           },
         });
       } catch (e: any) {
-        console.log('inside catch ', JSON.stringify(e));
-
         dataState.isLoading = false;
         dataState.error = e?.message ?? '';
         observer.next(dataState);

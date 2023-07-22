@@ -7,6 +7,8 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class InformerComponent implements OnInit {
   @Input() inputString!:string;
+  @Input() alertType:string = "info";
+  @Input() closable:boolean = false;
   constructor() { }
 
   ngOnInit(): void {

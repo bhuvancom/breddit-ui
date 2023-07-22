@@ -14,6 +14,7 @@ import {
 } from './services/auth/auth.gaurd';
 import { UserDetailsComponent } from './pages/user/user-details/user-details.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { AllSubrediitComponent } from './pages/all-subrediit/all-subrediit.component';
 
 const routes: Routes = [
   {
@@ -27,18 +28,8 @@ const routes: Routes = [
     component: HomeComponent,
   },
   {
-    path: 'auth',
-    canActivate: [isUserNotLoggedInGaurd],
-    children: [
-      {
-        path: 'login',
-        pathMatch: 'full',
-        component: LoginComponent,
-      },
-    ],
-  },
-  {
     path: 'subreddit',
+    pathMatch: 'prefix',
     children: [
       { path: ':subredditId', pathMatch: 'full', component: ViewPostComponent },
       {
@@ -46,6 +37,7 @@ const routes: Routes = [
         pathMatch: 'full',
         component: SinglePostViewComponent,
       },
+      { path: '', pathMatch: 'full', component: AllSubrediitComponent },
     ],
   },
   {
@@ -55,8 +47,8 @@ const routes: Routes = [
   },
   {
     path: 'create',
+    pathMatch: 'prefix',
     canActivate: [isUserLoggedInGaurd],
-
     children: [
       {
         path: 'subreddit',
@@ -67,11 +59,24 @@ const routes: Routes = [
     ],
   },
   {
-    path: '404', component: NotFoundComponent
+    path: '404',
+    component: NotFoundComponent,
+  },
+  {
+    path: 'auth',
+    pathMatch: 'prefix',
+    canActivate: [isUserNotLoggedInGaurd],
+    children: [
+      {
+        path: 'login',
+        pathMatch: 'full',
+        component: LoginComponent,
+      },
+    ],
   },
   {
     path: '**',
-    redirectTo: '/404'
+    redirectTo: '/404',
   },
 ];
 

@@ -1,0 +1,17 @@
+<div class="vote-button">
+  <mat-icon
+    matRipple
+    (click)="onVoteUp?.()"
+    class="mat-24"
+    [ngClass]="isMyVoteUp ? 'text-success' : 'ok'"
+    >arrow_upward</mat-icon
+  >
+  <span class="votes">{{ voteCount }}</span>
+  <mat-icon
+    matRipple
+    (click)="onVoteDown?.()"
+    class="mat-24"
+    [ngClass]="isMyVoteDown ? 'text-danger' : 'ok'"
+    >arrow_downward</mat-icon
+  >
+</div>

@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import ApiPagedResponse from 'src/app/models/api-paged-response';
+import DataState from 'src/app/models/data-state';
+import Subreddit from 'src/app/models/subreddits';
+import { HomeService } from 'src/app/services/home.service';
 
 @Component({
   selector: 'app-home-side-view',
@@ -6,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home-side-view.component.scss'],
 })
 export class HomeSideViewComponent implements OnInit {
+  homePageSubreddits: DataState<ApiPagedResponse<Subreddit>>;
   sideRoutes = [
     {
       path: '/pages/privacy',
@@ -28,7 +33,25 @@ export class HomeSideViewComponent implements OnInit {
       name: 'Privacy Policy',
     },
   ];
-  constructor() {}
+  constructor(private homeService: HomeService) {
+    this.homePageSubreddits = new DataState();
+  }
 
-  ngOnInit(): void {}
+  fetchSubreddits = () => {
+    this.homeService.fetchHomePageSubreddits();
+  };
+  ngOnInit(): void {
+    const staticSub = this.homeService.homePageSubreddits.value;
+    const shouldFetchSubreddits =
+      !staticSub.error &&
+      !staticSub.isLoading &&
+      !staticSub.data?.content.length;
+    if (shouldFetchSubreddits) {
+      this.fetchSubreddits();
+    }
+
+    this.homeService.homePageSubreddits.subscribe(e => {
+      this.homePageSubreddits = e;
+    });
+  }
 }

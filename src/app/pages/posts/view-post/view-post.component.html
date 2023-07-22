@@ -1,13 +1,114 @@
 <div class="row text-center">
-  <div class="mt-2">
-    <span class="mat-h1">This will be th title of the subreddit</span>
-    <br />
-    <span class="mat-h2">This will description</span>
+  <div class="col-12 mt-2">
+    <ng-container *ngIf="subredditDetails.data">
+      <span class="mat-h1">{{ subredditDetails.data.name }}</span>
+      <br />
+      <span class="mat-h2">{{ subredditDetails.data.description }}</span>
+      <br />
+      Created by :
+      <a
+        class="mat-h3 linq"
+        [routerLink]="'/user/' + subredditDetails.data.creator?.username"
+        ><span>{{ subredditDetails.data.creator?.username }}</span></a
+      >
+      <span class="ml-2"
+        >- {{ subredditDetails.data.creationDate | rdate }}</span
+      >
+      <span class="ml-1">
+        - {{ subredditDetails.data.numberOfPosts }} Posts</span
+      >
+      <div class="col-12 text-center" *ngIf="subredditDetails.data.mySubreddit">
+        <button mat-raised-button (click)="editSubreddet()" color="primary">
+          <mat-icon class="mat-18">edit</mat-icon>
+          <span class="mat-18">Edit Subreddit</span>
+        </button>
+
+        <button
+          class="ml-3"
+          mat-raised-button
+          (click)="deleteSubreddet()"
+          color="warn"
+        >
+          <mat-icon class="mat-18">delete</mat-icon>
+          <span class="mat-18">Delete Subreddit</span>
+        </button>
+      </div>
+      <div class="mt-2 col-12 text-center">
+        <button
+          mat-raised-button
+          class=""
+          color="primary"
+          (click)="gotoCreatePost()"
+        >
+          <mat-icon class="mat-18">edit</mat-icon>
+          <span class="mat-18">Create Post</span>
+        </button>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="subredditDetails.isLoading">
+      <div class="centerItem">
+        <mat-progress-spinner
+          mode="indeterminate"
+          type="indeterminate"
+          color="primary"
+          diameter="50"
+          class="mt-2 example-margin"
+        >
+        </mat-progress-spinner>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="subredditDetails.error">
+      <mat-card class="errorCard col-12 text-center">
+        <div>
+          <app-informer
+            [inputString]="subredditDetails.error"
+            [alertType]="'danger'"
+          ></app-informer>
+          <app-error-handler
+            class="errorCard"
+            [callback]="fetchSubreddit"
+            [inputString]="'Retry'"
+          ></app-error-handler>
+        </div>
+      </mat-card>
+    </ng-container>
   </div>
 </div>
 <div class="mt-4"></div>
-<app-post-card></app-post-card>
-<app-post-card></app-post-card>
-<app-post-card></app-post-card>
-<app-post-card></app-post-card>
-<app-post-card></app-post-card>
+<div *ngFor="let item of posts.data?.content">
+  <app-post-card [post]="item" [id]="subredditId"></app-post-card>
+</div>
+<ng-container
+  *ngIf="(posts.data?.content?.length ?? 0) > 0 && !posts.data?.last"
+>
+  <div class="centerItem mt-3">
+    <button mat-raised-button (click)="fetchNextPosts()">Fetch More</button>
+  </div>
+</ng-container>
+<ng-container *ngIf="posts.isLoading">
+  <div class="centerItem">
+    <mat-progress-spinner
+      mode="indeterminate"
+      type="indeterminate"
+      color="primary"
+      diameter="50"
+      class="mt-2 example-margin"
+    >
+    </mat-progress-spinner>
+  </div>
+</ng-container>
+<ng-container *ngIf="posts.error">
+  <mat-card class="errorCard">
+    <div>
+      <app-informer
+        [inputString]="posts.error"
+        [alertType]="'danger'"
+      ></app-informer>
+      <app-error-handler
+        class="errorCard"
+        [callback]="fetchNextPosts"
+        [inputString]="'Retry'"
+      ></app-error-handler>
+    </div>
+  </mat-card>
+</ng-container>

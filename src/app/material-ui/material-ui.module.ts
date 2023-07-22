@@ -25,9 +25,10 @@ import { MatDividerModule } from '@angular/material/divider';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
 import {MatTabsModule} from '@angular/material/tabs';
-
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 const MaterialComponents = [
+  ScrollingModule,
   MatTabsModule,
   MatListModule,
   MatSidenavModule,

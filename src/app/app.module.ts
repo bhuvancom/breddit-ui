@@ -29,12 +29,17 @@ import { HomeSideViewComponent } from './widgets/home-side-view/home-side-view.c
 import { HomeCreatePostComponent } from './widgets/home-create-post/home-create-post.component';
 import { PostCardComponent } from './widgets/post-card/post-card.component';
 import { CommentCreateComponent } from './widgets/comment-create/comment-create.component';
-import { CommentViewComponent } from './widgets/comment-view/comment-view.component';
+import { CommentViewComponent, DialogContentExample } from './widgets/comment-view/comment-view.component';
 import { UserDetailsComponent } from './pages/user/user-details/user-details.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
+import { AllSubrediitComponent } from './pages/all-subrediit/all-subrediit.component';
+import { MyDatePipe } from './util/pipes/date.pipe';
+import { VoteComponent } from './widget/vote/vote.component';
 @NgModule({
   declarations: [
+    MyDatePipe,
+    DialogContentExample,
     AppComponent,
     AppbarComponent,
     HomeComponent,
@@ -59,6 +64,8 @@ import { EditorModule } from '@tinymce/tinymce-angular';
     CommentViewComponent,
     UserDetailsComponent,
     NotFoundComponent,
+    AllSubrediitComponent,
+    VoteComponent,
   ],
   imports: [
     MaterialUiModule,
@@ -69,7 +76,6 @@ import { EditorModule } from '@tinymce/tinymce-angular';
     EditorModule,
     ReactiveFormsModule,
     HttpClientModule,
-
     HttpClientModule,
     NgxSkeletonLoaderModule,
   ],
@@ -84,6 +90,7 @@ import { EditorModule } from '@tinymce/tinymce-angular';
       useValue: { appearance: 'outline' },
     },
   ],
+  exports: [MyDatePipe],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

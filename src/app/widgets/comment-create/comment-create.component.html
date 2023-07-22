@@ -1,10 +1,18 @@
 <div class="row">
-  <span>Comment as <span class="text-danger">bhuvancom</span></span>
+  <span class="pl-2"
+    >Comment as <span class="text-danger">{{ username }}</span></span
+  >
   <mat-form-field class="example-full-width mt-3 col-12">
     <mat-label>Comment</mat-label>
-    <textarea matInput placeholder="Ex. 100 Main St"></textarea>
+    <textarea
+      matInput
+      placeholder="Write your comment"
+      [formControl]="commentForm"
+    ></textarea>
   </mat-form-field>
 </div>
 <div class="text-center">
-  <button class="" color="primary" mat-raised-button (click)="(1)">Comment</button>
+  <button class="" color="primary" mat-raised-button (click)="onSubmitometn()">
+    Comment
+  </button>
 </div>

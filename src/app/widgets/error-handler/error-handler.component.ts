@@ -7,12 +7,12 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ErrorHandlerComponent implements OnInit {
   @Input('inputString') inputString: string = '';
-  @Input('callback') callback!: Function;
+  @Input('callback') callback?: () => void;
 
   constructor() {}
   callFunction(): void {
     console.log("Calling error handler function");
-    this.callback();
+    this.callback?.();
   }
   ngOnInit(): void {}
 }

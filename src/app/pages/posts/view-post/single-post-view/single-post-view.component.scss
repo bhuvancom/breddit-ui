@@ -1,0 +1,16 @@
+.upvote,
+.downvote {
+  font-size: 20px;
+  padding: 5px;
+}
+
+.votes {
+  width: 30px;
+  text-align: center;
+}
+.vote-button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-direction: column;
+}

@@ -4,26 +4,8 @@
       <div class="container-fluid">
         <app-home-create-post></app-home-create-post>
         <div class="mt-4"></div>
-        <app-post-card></app-post-card>
-        <app-post-card></app-post-card>
-        <app-post-card></app-post-card>
-        <app-post-card></app-post-card>
-        <app-post-card></app-post-card>
         <div *ngFor="let item of homePagePosts.data?.content">
-          <mat-card class="example-card">
-            <mat-card-header>
-              <mat-card-title>{{ item.title }}</mat-card-title>
-              <mat-card-subtitle>{{ item.description }}</mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content>
-              <p>Created by : {{ item.user.username }}</p>
-              <p>Number of comments : {{ item.commentCount }}</p>
-            </mat-card-content>
-            <mat-card-actions>
-              <button mat-button>LIKE</button>
-              <button mat-button>SHARE</button>
-            </mat-card-actions>
-          </mat-card>
+          <app-post-card [post]="item"></app-post-card>
         </div>
         <ng-container
           *ngIf="
@@ -31,7 +13,7 @@
             !homePagePosts.data?.last
           "
         >
-          <div class="centerItem">
+          <div class="centerItem mt-3">
             <button mat-raised-button (click)="fetchNext()">Fetch More</button>
           </div>
         </ng-container>
@@ -41,7 +23,8 @@
               mode="indeterminate"
               type="indeterminate"
               color="primary"
-              class="example-margin"
+              diameter="50"
+              class="mt-2 example-margin"
             >
             </mat-progress-spinner>
           </div>
@@ -49,7 +32,10 @@
         <ng-container *ngIf="homePagePosts.error">
           <mat-card class="errorCard">
             <div>
-              <app-informer [inputString]="homePagePosts.error"></app-informer>
+              <app-informer
+                [inputString]="homePagePosts.error"
+                [alertType]="'danger'"
+              ></app-informer>
               <app-error-handler
                 class="errorCard"
                 [callback]="fetchNext"
@@ -62,7 +48,7 @@
     </div>
   </div>
 
-  <div *ngIf="isDesktop" class="column second-column">
+  <div *ngIf="isDesktop" class="pl-3 column second-column">
     <div class="row">
       <app-home-side-view></app-home-side-view>
     </div>

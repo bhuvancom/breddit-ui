@@ -6,6 +6,8 @@ import { environment } from 'src/environments/environment';
 import User from 'src/app/models/user';
 import LoginReq from 'src/app/models/request/login-request';
 import RegisterReq from 'src/app/models/request/register-req';
+import DataState from 'src/app/models/data-state';
+import { APICall } from 'src/app/util/api-call';
 
 @Injectable({
   providedIn: 'root',
@@ -14,10 +16,13 @@ export class AuthService {
   register(registerReq: RegisterReq): Observable<any> {
     return this.http.post(`${environment.baseUrl}/auth/register`, registerReq);
   }
+  findUser(userId: string): Observable<DataState<User>> {
+    return this.apicaller.apiCall("GET", "/user/" + userId);
+  }
   public token: BehaviorSubject<string> = new BehaviorSubject('');
   public isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private tokenKey = 'auth_token';
-  public user?: BehaviorSubject<User>;
+  public user: BehaviorSubject<User> | undefined;
   login(loginReq: LoginReq): Observable<AuthResponse> {
     return this.http
       .post<AuthResponse>(`${environment.baseUrl}/auth/login`, loginReq)
@@ -26,12 +31,15 @@ export class AuthService {
           const token = response.authToken; // Assuming the JWT token is returned as 'token' in the response
           this.setToken(token);
           this.setuser(response.user);
+          this.isLoggedIn.next(token.length > 0 && (response.user !== undefined));
         })
       );
   }
-
+  private userKey = "user_key";
   logout(): void {
     localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem(this.userKey);
+    this.isLoggedIn.next(false);
     this.token.next('');
   }
 
@@ -41,14 +49,13 @@ export class AuthService {
   }
 
   setuser(user: User) {
-    this.user?.next(user);
-    localStorage.setItem('user', JSON.stringify(user));
+    this.user = new BehaviorSubject(user);
+    localStorage.setItem(this.userKey, JSON.stringify(user));
   }
 
   getUser(): User | undefined {
-    const u = localStorage.getItem('user');
+    const u = localStorage.getItem(this.userKey);
     console.log('user is ', { u });
-
     if (u) {
       let user = JSON.parse(u);
       return user;
@@ -59,16 +66,18 @@ export class AuthService {
   getToken(): string {
     return localStorage.getItem(this.tokenKey) ?? this.token.getValue();
   }
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private apicaller: APICall) {
     const user = this.getUser();
     const token = this.getToken();
+
     if (token) {
       this.setToken(token);
       if (user) {
         console.log('user logged in ', { user });
-        this.user?.next(user);
+        this.user = new BehaviorSubject(user);
+        this.isLoggedIn.next(true);
       } else {
-        this.setToken('');
+        this.logout();
       }
     }
   }
